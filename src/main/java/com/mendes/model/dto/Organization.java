@@ -1,4 +1,4 @@
-package com.mendes.model;
+package com.mendes.model.dto;
 
 import java.io.Serializable;
 

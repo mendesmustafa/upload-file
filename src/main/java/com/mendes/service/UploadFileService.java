@@ -1,6 +1,6 @@
 package com.mendes.service;
 
-import com.mendes.model.Organization;
+import com.mendes.model.dto.Organization;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,10 +22,26 @@ import java.util.List;
 public class UploadFileService {
 
 
+    private LocationService locationService;
+
+    public UploadFileService(LocationService locationService) {
+        this.locationService = locationService;
+    }
+
+    public void saveData(List<Organization> organizations) {
+
+        String location = "bölge";
+        organizations.forEach(organization -> {
+            if (location.equals(organization.getType().toLowerCase())) {
+                String[] data = organization.getData().split(">");
+                locationService.save(data[0], data[1]);
+            }
+        });
+    }
+
     public List<Organization> readFile(InputStream inputStream) {
 
         List<Organization> list = new ArrayList<Organization>();
-
         try {
 
             Workbook workbook = new HSSFWorkbook(inputStream);

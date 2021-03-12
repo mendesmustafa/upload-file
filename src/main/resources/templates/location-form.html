@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        label {
+            display: inline-block;
+            width: 100px;
+            margin: 7px;
+            text-align: left;
+        }
+
+        button {
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <h1>Bölge Düzenleme Formu</h1>
+    <br>
+    <form action="#" th:action="@{/location/save}" th:object="${location}" method="POST">
+
+        <input type="hidden" th:field="*{id}"/> <br/>
+
+        <label>Şehir Adı:</label>
+        <input type="text" th:field="*{city}"><br>
+
+        <label>İlçe Adı:</label>
+        <input type="text" th:field="*{district}"><br>
+
+        <button type="submit">Kaydet</button>
+    </form>
+    <a th:href="@{/location/list}">Bölge Listesine Dön</a><br>
+</div>
+
+</body>
+</html>

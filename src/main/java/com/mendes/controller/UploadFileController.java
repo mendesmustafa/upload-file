@@ -1,8 +1,7 @@
 package com.mendes.controller;
 
-import com.mendes.model.Organization;
+import com.mendes.model.dto.Organization;
 import com.mendes.service.UploadFileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +18,12 @@ import java.util.List;
 @Controller
 public class UploadFileController {
 
-    @Autowired
+
     private UploadFileService uploadFileService;
+
+    public UploadFileController(UploadFileService uploadFileService) {
+        this.uploadFileService = uploadFileService;
+    }
 
     @GetMapping("/")
     public String index() {
@@ -31,7 +34,7 @@ public class UploadFileController {
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
 
         List<Organization> organizations = uploadFileService.readFile(file.getInputStream());
-
+        uploadFileService.saveData(organizations);
         return "index";
     }
 }
