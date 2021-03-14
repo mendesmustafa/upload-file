@@ -2,7 +2,7 @@
 
 # Database
 
-Projeyi çalıştırmak için properties dosyasından gerekli database bilgilerini değiştirmeniz gerekiyor gerekiyor.
+Projeyi çalıştırmak için properties dosyasından gerekli database bilgilerini değiştirmeniz gerekiyor.
 
 # Bilgiler
 
