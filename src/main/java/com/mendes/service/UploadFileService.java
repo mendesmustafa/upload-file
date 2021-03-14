@@ -23,18 +23,27 @@ public class UploadFileService {
 
 
     private LocationService locationService;
+    private CategoryService categoryService;
 
-    public UploadFileService(LocationService locationService) {
+    public UploadFileService(LocationService locationService, CategoryService categoryService) {
         this.locationService = locationService;
+        this.categoryService = categoryService;
     }
 
     public void saveData(List<Organization> organizations) {
 
         String location = "bölge";
+        String category = "kategori";
         organizations.forEach(organization -> {
+
             if (location.equals(organization.getType().toLowerCase())) {
                 String[] data = organization.getData().split(">");
                 locationService.save(data[0], data[1]);
+            }
+
+            if (category.equals(organization.getType().toLowerCase())) {
+                String[] data = organization.getData().split(">");
+                categoryService.save(data[0], data[1]);
             }
         });
     }

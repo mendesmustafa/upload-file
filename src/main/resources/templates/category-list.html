@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <h1>Kategori Listesi</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>İd</th>
+            <th>Kategori Adı</th>
+            <th>Kategori Alt Adı</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.subCategoryName}"></td>
+            <td>
+                <a th:href="@{/category/edit/{id} (id=${category.id})}">Düzenle</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

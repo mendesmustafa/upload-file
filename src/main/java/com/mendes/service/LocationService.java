@@ -31,7 +31,7 @@ public class LocationService {
     }
 
     public Location save(Location model) {
-         locationRepository.save(model);
+        locationRepository.save(model);
         return model;
     }
 
