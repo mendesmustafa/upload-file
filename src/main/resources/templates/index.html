@@ -5,11 +5,23 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <p>Ana Sayfa</p>
+    <div>
+        <div>
+            <a th:href="@{/location/list}">Bölge Listesine Git</a>
+        </div>
+        <div>
+            <a th:href="@{/category/list}">Katagori Listesine Git</a>
+        </div>
+    </div></br>
 
-<p>Hello</p>
-<form enctype="multipart/form-data" method="post" th:action="@{/upload}">
-    <input th:name="file" type="file">
-    <input type="submit" value="import">
-</form>
+    <div>
+        <form enctype="multipart/form-data" method="post" th:action="@{/upload}">
+            <input th:name="file" type="file">
+            <input type="submit" value="import">
+        </form>
+    </div>
+</div>
 </body>
 </html>
