@@ -21,9 +21,8 @@ import java.util.List;
 @Service
 public class UploadFileService {
 
-
-    private LocationService locationService;
-    private CategoryService categoryService;
+    private final LocationService locationService;
+    private final CategoryService categoryService;
 
     public UploadFileService(LocationService locationService, CategoryService categoryService) {
         this.locationService = locationService;
@@ -31,16 +30,13 @@ public class UploadFileService {
     }
 
     public void saveData(List<Organization> organizations) {
-
         String location = "bölge";
         String category = "kategori";
         organizations.forEach(organization -> {
-
             if (location.equals(organization.getType().toLowerCase())) {
                 String[] data = organization.getData().split(">");
                 locationService.save(data[0], data[1]);
             }
-
             if (category.equals(organization.getType().toLowerCase())) {
                 String[] data = organization.getData().split(">");
                 categoryService.save(data[0], data[1]);
@@ -49,26 +45,21 @@ public class UploadFileService {
     }
 
     public List<Organization> readFile(InputStream inputStream) {
-
         List<Organization> list = new ArrayList<Organization>();
         try {
-
             Workbook workbook = new HSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
             Iterator rows = sheet.iterator();
             int rowNumber = 0;
             while (rows.hasNext()) {
                 Row currentRow = (Row) rows.next();
-
                 //head okunmadı
                 if (rowNumber == 0) {
                     rowNumber++;
                     continue;
                 }
-
                 Iterator cellsInRow = currentRow.iterator();
                 Organization organization = new Organization();
-
                 int cellIndex = 0;
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = (Cell) cellsInRow.next();
@@ -84,7 +75,6 @@ public class UploadFileService {
                 list.add(organization);
             }
             workbook.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

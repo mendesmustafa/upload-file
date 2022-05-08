@@ -1,12 +1,10 @@
 package com.mendes.controller;
 
-import com.mendes.model.entity.Category;
+import com.mendes.model.dto.CategoryDto;
 import com.mendes.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by mendesmustafa on 13.03.2021.
@@ -16,7 +14,7 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -24,21 +22,19 @@ public class CategoryController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Category> categories = categoryService.list();
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", categoryService.list());
         return "category-list";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
-        Category category = categoryService.findById(id);
-        model.addAttribute("category", category);
+        model.addAttribute("category", categoryService.getById(id));
         return "category-form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("category") Category category) {
-        categoryService.save(category);
+    public String save(@ModelAttribute("category") CategoryDto categoryDto) {
+        categoryService.save(categoryDto);
         return "redirect:/category/list";
     }
 }

@@ -18,8 +18,7 @@ import java.util.List;
 @Controller
 public class UploadFileController {
 
-
-    private UploadFileService uploadFileService;
+    private final UploadFileService uploadFileService;
 
     public UploadFileController(UploadFileService uploadFileService) {
         this.uploadFileService = uploadFileService;
@@ -32,7 +31,6 @@ public class UploadFileController {
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-
         List<Organization> organizations = uploadFileService.readFile(file.getInputStream());
         uploadFileService.saveData(organizations);
         return "index";

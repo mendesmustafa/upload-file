@@ -1,12 +1,10 @@
 package com.mendes.controller;
 
-import com.mendes.model.entity.Location;
+import com.mendes.model.dto.LocationDto;
 import com.mendes.service.LocationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 /**
@@ -17,7 +15,7 @@ import java.util.List;
 @RequestMapping("/location")
 public class LocationController {
 
-    private LocationService locationService;
+    private final LocationService locationService;
 
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
@@ -25,21 +23,19 @@ public class LocationController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Location> locations = locationService.list();
-        model.addAttribute("locations", locations);
+        model.addAttribute("locations", locationService.list());
         return "location-list";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id) {
-        Location location = locationService.findById(id);
-        model.addAttribute("location", location);
+        model.addAttribute("location", locationService.getById(id));
         return "location-form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("location") Location location) {
-        locationService.save(location);
+    public String save(@ModelAttribute("location") LocationDto locationDto) {
+        locationService.save(locationDto);
         return "redirect:/location/list";
     }
 }

@@ -1,11 +1,13 @@
 package com.mendes.service;
 
+import com.mendes.model.dto.CategoryDto;
 import com.mendes.model.entity.Category;
 import com.mendes.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by mendesmustafa on 13.03.2021.
@@ -14,7 +16,7 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
@@ -29,14 +31,30 @@ public class CategoryService {
         return category;
     }
 
-    public Category save(Category model) {
-        categoryRepository.save(model);
-        return model;
+    public CategoryDto getById(Long id) {
+        Category category = findById(id);
+        return fillCategoryDto(category);
     }
 
-    public List<Category> list() {
-        List<Category> categories = categoryRepository.findAll();
-        return categories;
+    public CategoryDto save(CategoryDto categoryDto) {
+        Category category = new Category();
+        category.setName(categoryDto.getName());
+        category.setSubCategoryName(categoryDto.getSubCategoryName());
+        categoryRepository.save(category);
+        categoryDto.setId(category.getId());
+        return categoryDto;
+    }
+
+    public List<CategoryDto> list() {
+        return categoryRepository.findAll().stream().map(this::fillCategoryDto).collect(Collectors.toList());
+    }
+
+    private CategoryDto fillCategoryDto(Category category) {
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        categoryDto.setSubCategoryName(category.getSubCategoryName());
+        return categoryDto;
     }
 
     public void save(String name, String subCategoryName) {

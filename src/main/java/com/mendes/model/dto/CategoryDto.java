@@ -1,25 +1,15 @@
-package com.mendes.model.entity;
+package com.mendes.model.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by mendesmustafa on 13.03.2021.
+ * @author mendesmustafa on 08-05-2022
  */
 
-@Entity
-@Table(name = "CATEGORY")
-public class Category implements Serializable {
+public class CategoryDto implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
-
-    @Column(name = "NAME")
     private String name;
-
-    @Column(name = "SUN_CATEGORY_NAME")
     private String subCategoryName;
 
     public Long getId() {
